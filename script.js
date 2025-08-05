@@ -114,9 +114,10 @@ if (Notification.permission !== "granted") {
 
 startTimer();*/
 
-const FOCUS_MINUTES = 50;  // 3 segundos
-const BREAK_MINUTES = 10;  // 3 segundos
+const FOCUS_MINUTES = 0.05;  // 3 segundos para prueba
+const BREAK_MINUTES = 0.05;  // 3 segundos para prueba
 const STORAGE_KEY = "focus_timer_start";
+const LAST_MODE_KEY = "last_mode";
 
 const COLORS = {
   focusStart: [106, 90, 205],
@@ -181,22 +182,19 @@ function updateBackground(mode, progress) {
   document.body.style.backgroundColor = color;
 }
 
-let lastMode = null;
+// Cargar el último modo desde localStorage
+let lastMode = localStorage.getItem(LAST_MODE_KEY) || null;
 
 function notify(mode) {
-  console.log("⏰ Intentando notificar");
-  console.log("Permiso:", Notification.permission);
-  console.log("Modo actual:", mode, "| Último modo:", lastMode);
-
   if (Notification.permission === "granted" && mode !== lastMode) {
     const title = mode === "Focus" ? "🧠 ¡Enfócate!" : "🧘 Hora de relajarse";
-    const body = mode === "Focus" ? "Tu tiempo de enfoque ha comenzado." : "Tómate un respiro, inicia tu break.";
+    const body = mode === "Focus"
+      ? "Tu tiempo de enfoque ha comenzado."
+      : "Tómate un respiro, inicia tu break.";
 
     new Notification(title, { body });
-    console.log("✅ Notificación enviada:", title);
     lastMode = mode;
-  } else if (Notification.permission !== "granted") {
-    console.warn("🚫 Permiso de notificaciones no otorgado.");
+    localStorage.setItem(LAST_MODE_KEY, mode);
   }
 }
 
@@ -230,21 +228,23 @@ function startTimer() {
   setInterval(update, 1000);
 }
 
-// Solicitar permiso de notificaciones
-if (Notification.permission === "default") {
+// Función para solicitar permiso de notificaciones
+function solicitarPermiso() {
   Notification.requestPermission().then((permission) => {
-    console.log("🔐 Permiso de notificación:", permission);
     if (permission === "granted") {
-      new Notification("🔔 ¡Notificaciones activadas!", {
-        body: "Recibirás alertas de cambio de fase.",
-      });
+      if (!localStorage.getItem("notificacion_inicial_mostrada")) {
+        new Notification("🔔 Notificaciones activadas", {
+          body: "¡Listo! Ahora recibirás alertas de enfoque y descanso.",
+        });
+        localStorage.setItem("notificacion_inicial_mostrada", "true");
+      }
+    } else {
+      alert("No activaste las notificaciones 😢");
     }
   });
-} else if (Notification.permission === "granted") {
-  console.log("🔔 Notificaciones ya permitidas.");
-} else {
-  console.warn("❌ Notificaciones bloqueadas.");
 }
 
-startTimer();
+// Exportar la función para llamarla desde HTML (si usas <script defer>)
+window.solicitarPermiso = solicitarPermiso;
 
+startTimer();
