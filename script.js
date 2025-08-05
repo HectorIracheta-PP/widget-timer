@@ -114,8 +114,8 @@ if (Notification.permission !== "granted") {
 
 startTimer();*/
 
-const FOCUS_MINUTES = 50;  // 3 segundos para prueba
-const BREAK_MINUTES = 10;  // 3 segundos para prueba
+const FOCUS_MINUTES = 50; 
+const BREAK_MINUTES = 10;  
 const STORAGE_KEY = "focus_timer_start";
 const LAST_MODE_KEY = "last_mode";
 
