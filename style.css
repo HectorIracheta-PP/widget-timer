@@ -13,7 +13,7 @@
   color: white;
   background-color: transparent;
   margin-bottom: 6px;
-  font-size: 18px;
+  font-size: 16px;
 }
 .form-usuario button{
   width: 220px;
@@ -21,7 +21,7 @@
   border-radius: 8px;
   border: 1px solid white;
   color: black;
-  font-size: 18px;
+  font-size: 16px;
 }
 body {
   font-family: 'Segoe UI', sans-serif;
