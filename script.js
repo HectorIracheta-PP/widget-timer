@@ -212,6 +212,7 @@ document.addEventListener('submit', function (e) {
         e.preventDefault();
         const input = e.target.querySelector('.mail-usuario');
         agent_id = input.value.toLowerCase();
+        localStorage.setItem('savedUser',agent_id);
         e.target.remove();
     }
 });
