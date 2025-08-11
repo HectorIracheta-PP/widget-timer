@@ -185,12 +185,36 @@ function updateBackground(mode, progress) {
 // Cargar el último modo desde localStorage
 let lastMode = localStorage.getItem(LAST_MODE_KEY) || null;
 
+var agent_id="luis.hernandez@parapaquetes.com"
+
+function updateTask(taskName){
+    const gscript="https://script.google.com/macros/s/AKfycbw465Db4xwcjQ3SHScAUyK7g6mzipKOGd3v5_SGMLh7NgpqhtubnANjlAvYjnZkF4_J/exec";
+    var gurl = gscript + "?callback=ctrlq&agente=" + encodeURIComponent(agent_id) + "&task=" + encodeURIComponent(taskName) + "&action=update";
+    var request = jQuery.ajax({
+        crossDomain: true,
+        url: gurl ,
+        method: "GET",
+        dataType: "jsonp",
+        success: function(data){
+        },
+        complete: function(data){
+        }
+    });
+}
+
 function notify(mode) {
   if (Notification.permission === "granted" && mode !== lastMode) {
     const title = mode === "Focus" ? "🧠 ¡Enfócate!" : "🧘 Hora de relajarse";
     const body = mode === "Focus"
       ? "Tu tiempo de enfoque ha comenzado."
       : "Tómate un respiro, inicia tu break.";
+
+    if(mode=="Focus"){
+        updateTask('focus');
+    }
+    else{
+        updateTask('relax')
+    }
 
     new Notification(title, { body });
     lastMode = mode;
