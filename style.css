@@ -1,4 +1,28 @@
-
+.form-usuario{
+  position: fixed;
+  background-color: rgba(0, 32, 64, 0.7);
+  width: 220px;
+  padding: 1000px;
+}
+.mail-usuario{
+  width: 207px;
+  padding: 2px 6px;
+  margin: 0;
+  border-radius: 8px;
+  border: 1px solid white;
+  color: white;
+  background-color: transparent;
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+.form-usuario button{
+  width: 220px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid white;
+  color: black;
+  font-size: 18px;
+}
 body {
   font-family: 'Segoe UI', sans-serif;
   display: flex;
