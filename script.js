@@ -185,7 +185,37 @@ function updateBackground(mode, progress) {
 // Cargar el último modo desde localStorage
 let lastMode = localStorage.getItem(LAST_MODE_KEY) || null;
 
-var agent_id="luis.hernandez@parapaquetes.com"
+let agent_id = "";
+
+if (localStorage.getItem('savedUser') !== null) {
+    agent_id = localStorage.getItem('savedUser');
+} else {
+    const form = document.createElement('form');
+    form.className = 'form-usuario';
+
+    const input = document.createElement('input');
+    input.className = 'mail-usuario';
+    input.type = 'text';
+    input.placeholder = 'INTRODUCE TU CORREO';
+
+    const button = document.createElement('button');
+    button.textContent = 'LISTO';
+
+    form.appendChild(input);
+    form.appendChild(button);
+
+    document.body.insertBefore(form, document.body.firstChild);
+}
+
+document.addEventListener('submit', function (e) {
+    if (e.target.matches('.form-usuario')) {
+        e.preventDefault();
+        const input = e.target.querySelector('.mail-usuario');
+        agent_id = input.value.toLowerCase();
+        e.target.remove();
+    }
+});
+
 
 function updateTask(taskName){
     const gscript="https://script.google.com/macros/s/AKfycbw465Db4xwcjQ3SHScAUyK7g6mzipKOGd3v5_SGMLh7NgpqhtubnANjlAvYjnZkF4_J/exec";
