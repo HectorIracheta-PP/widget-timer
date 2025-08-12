@@ -146,6 +146,7 @@ function getCurrentPhase(startTime) {
   const breakSeconds = Math.floor(BREAK_MINUTES * 60);
 
   if (timeInCycle < focusSeconds) {
+    updateTask('focus');
     return {
       mode: "Focus",
       remaining: focusSeconds - timeInCycle,
@@ -153,6 +154,7 @@ function getCurrentPhase(startTime) {
       elapsed: timeInCycle
     };
   } else {
+    updateTask('relax');
     const breakElapsed = timeInCycle - focusSeconds;
     return {
       mode: "Break",
@@ -239,13 +241,6 @@ function notify(mode) {
     const body = mode === "Focus"
       ? "Tu tiempo de enfoque ha comenzado."
       : "Tómate un respiro, inicia tu break.";
-
-    if(mode=="Focus"){
-        updateTask('focus');
-    }
-    else{
-        updateTask('relax')
-    }
 
     new Notification(title, { body });
     lastMode = mode;
