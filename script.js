@@ -146,7 +146,6 @@ function getCurrentPhase(startTime) {
   const breakSeconds = Math.floor(BREAK_MINUTES * 60);
 
   if (timeInCycle < focusSeconds) {
-    updateTask('focus');
     return {
       mode: "Focus",
       remaining: focusSeconds - timeInCycle,
@@ -154,7 +153,6 @@ function getCurrentPhase(startTime) {
       elapsed: timeInCycle
     };
   } else {
-    updateTask('relax');
     const breakElapsed = timeInCycle - focusSeconds;
     return {
       mode: "Break",
