@@ -241,6 +241,11 @@ function notify(mode) {
       : "Tómate un respiro, inicia tu break.";
 
     new Notification(title, { body });
+    if (mode === "Focus") {
+      updateTask("focus");
+    } else {
+      updateTask("relax");
+    }
     lastMode = mode;
     localStorage.setItem(LAST_MODE_KEY, mode);
   }
